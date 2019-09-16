@@ -12,8 +12,8 @@ app.get('/', function(req, res){
     res.send('Root');
 });
 
-app.get('/sooyeon', function(req, res){
-    connection.query('SELECT * from sooyeon', function(err, rows) {
+app.get('/action', function(req, res){
+    connection.query('SELECT * from action_table_g', function(err, rows) {
         if(err) throw err;
 
         console.log('The solution is: ', rows);
