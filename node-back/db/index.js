@@ -12,8 +12,27 @@ app.get('/', function(req, res){
     res.send('Root');
 });
 
+// 그룹 합수, 집계 함수
 app.get('/action', function(req, res){
     connection.query('SELECT * from action_table_g', function(err, rows) {
+        if(err) throw err;
+
+        console.log('The solution is: ', rows);
+        res.send(rows);
+    });
+});
+
+app.get('/action/time', function(req, res){
+    connection.query('SELECT time from action_table_g', function(err, rows) {
+        if(err) throw err;
+
+        console.log('The solution is: ', rows);
+        res.send(rows);
+    });
+});
+
+app.get('/action/duration', function(req, res){
+    connection.query('SELECT duration from action_table_g', function(err, rows) {
         if(err) throw err;
 
         console.log('The solution is: ', rows);
