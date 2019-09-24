@@ -37,11 +37,13 @@ app.get('/action/time', function(req, res){
 
         for (var i=0; i<rows.length; i++) {
             var row = rows[i];
-            var date = JSON.parse(row);
-            var dateTime = JSON.parse(row).time;
+            // var date = JSON.parse(row);
+            // var dateTime = JSON.parse(row).time;
             console.log('The solution is row: ', row, '\n');
-            console.log('JSON.parse(row): ', date, '\n');
-            console.log('JSON.parse(row).time: ', dateTime, '\n');
+            // console.log('JSON.parse(row): ', date, '\n');
+            // console.log('JSON.parse(row).time: ', dateTime, '\n');
+            console.log('\n');
+            res.send(row);
             console.log('\n');
         }
 
