@@ -32,6 +32,7 @@ app.get('/action/time', function(req, res){
         // var date = new Date(dateStr);
         // var date = new Date(rows[1]);
         console.log('rows.toString(): ', rows.toString());
+        console.log('rows.time.toString(): ', rows.time.toString());
         // console.log('The solution is: ', date, '\n');
         res.send(rows);
     });
