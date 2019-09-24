@@ -26,12 +26,12 @@ app.get('/action/time', function(req, res){
     connection.query('SELECT time from action_table_g', function(err, rows) {
         if(err) throw err;
 
-        console.log('The solution is: ', rows);
+        console.log('The solution is: ', rows, '\n');
         // var dateStr = JSON.parse(rows[1]);
         // var dateStr = JSON.parse(rows);
         // var date = new Date(dateStr);
         // var date = new Date(rows[1]);
-        rows.toString();
+        console.log('rows.toString(): ', rows.toString());
         // console.log('The solution is: ', date, '\n');
         res.send(rows);
     });
