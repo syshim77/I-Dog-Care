@@ -27,7 +27,8 @@ app.get('/action/time', function(req, res){
         if(err) throw err;
 
         // console.log('The solution is: ', rows);
-        var dateStr = JSON.parse(rows[1]);
+        // var dateStr = JSON.parse(rows[1]);
+        var dateStr = JSON.parse(rows);
         var date = new Date(dateStr);
         // var date = new Date(rows[1]);
         console.log('The solution is: ', date, '\n');
