@@ -26,7 +26,10 @@ app.get('/action/time', function(req, res){
     connection.query('SELECT time from action_table_g', function(err, rows) {
         if(err) throw err;
 
-        var date = new Date(rows[1]);
+        // console.log('The solution is: ', rows);
+        var dateStr = JSON.parse(rows[1]);
+        var date = new Date(dateStr);
+        // var date = new Date(rows[1]);
         console.log('The solution is: ', date, '\n');
         res.send(rows);
     });
