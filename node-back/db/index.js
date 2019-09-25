@@ -44,8 +44,9 @@ app.get('/action/time', function(req, res){
             console.log('The solution is row: ', row, '\n');
             console.log('The solution is row.time: ', dateStr, '\n');
             console.log('The solution is date: ', date, '\n');
+            console.log('The solution is date.toString(): ', date.toString(), '\n');
             // console.log('JSON.parse(row).time: ', dateTime, '\n');
-            console.log('\n');
+            // console.log('\n');
             // res.send(row);
             // console.log('\n');
         }
@@ -58,7 +59,16 @@ app.get('/action/duration', function(req, res){
     connection.query('SELECT duration from action_table_g', function(err, rows) {
         if(err) throw err;
 
-        console.log('The solution is: ', rows);
+        // console.log('The solution is: ', rows);
+        var duration = new Array(rows.length);
+
+        for (var i=0; i<rows.length; i++) {
+            var row = rows[i];
+            // duration.push(row.duration);
+            duration[i] = row.duration;
+            console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+        }
+
         res.send(rows);
     });
 });

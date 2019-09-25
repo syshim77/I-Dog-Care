@@ -65,6 +65,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var mysql = require('mysql');
+var config = require('./db/config/config');
+var connection = mysql.createConnection(config);
+
 var app = express();
 
 app.use(logger('dev'));
@@ -89,6 +93,24 @@ app.get('/', cors(), (req, res) => {
 
   // res.send(JSON.stringify(totalData));
   res.send(JSON.stringify(dataList));
+});
+
+app.get('/activity', cors(), function(req, res) {
+  connection.query('SELECT duration from action_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    // var duration = new Array(rows.length);
+    //
+    // for (var i=0; i<rows.length; i++) {
+    //   var row = rows[i];
+    //   // duration.push(row.duration);
+    //   duration[i] = row.duration;
+    //   console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    // }
+
+    res.send(rows);
+  });
 });
 
 // catch 404 and forward to error handler
