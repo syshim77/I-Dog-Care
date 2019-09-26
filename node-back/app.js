@@ -95,27 +95,170 @@ app.get('/', cors(), (req, res) => {
   res.send(JSON.stringify(dataList));
 });
 
-app.get('/activity', cors(), function(req, res) {
+app.get('/activity', cors(), (req, res) => {
   connection.query('SELECT duration from action_table_g', function(err, rows) {
     if(err) throw err;
 
     // console.log('The solution is: ', rows);
-    // var duration = new Array(rows.length);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
     //
-    // for (var i=0; i<rows.length; i++) {
-    //   var row = rows[i];
-    //   // duration.push(row.duration);
-    //   duration[i] = row.duration;
-    //   console.log('The solution is duration[', i, ']: ', duration[i], '\n');
-    // }
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
 
-    res.send(rows);
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
+});
+
+app.get('/sleep', cors(), (req, res) => {
+  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
+});
+
+app.get('/joint', cors(), (req, res) => {
+  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
+});
+
+app.get('/stress', cors(), (req, res) => {
+  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
+});
+
+app.get('/calorie', cors(), (req, res) => {
+  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
+});
+
+app.get('/temperature', cors(), (req, res) => {
+  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
   });
 });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
+});
+
+app.get('/hrv', cors(), (req, res) => {
+  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var duration = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      cnt++;
+      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
 });
 
 // error handler
