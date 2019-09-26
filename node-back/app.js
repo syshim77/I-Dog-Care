@@ -95,6 +95,7 @@ app.get('/', cors(), (req, res) => {
   res.send(JSON.stringify(dataList));
 });
 
+// 산책 시간에 대한 table 추가되어야함
 app.get('/activity', cors(), (req, res) => {
   connection.query('SELECT duration from action_table_g', function(err, rows) {
     if(err) throw err;
@@ -142,11 +143,11 @@ app.get('/sleep', cors(), (req, res) => {
 });
 
 app.get('/joint', cors(), (req, res) => {
-  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+  connection.query('SELECT level from joint_table_g', function(err, rows) {
     if(err) throw err;
 
     // console.log('The solution is: ', rows);
-    var duration = new Array(rows.length/3);
+    var level = new Array(rows.length/3);
     var cnt = 0;
     //
     for (var i=0; i<rows.length; i+=3) {
@@ -154,22 +155,22 @@ app.get('/joint', cors(), (req, res) => {
       var row2 = rows[i+1];
       var row3 = rows[i+2];
       // duration.push(row.duration);
-      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      level[cnt] = (row1.level + row2.level + row3.level)/3;
       cnt++;
-      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+      console.log('The solution is level[', i, ']: ', level[i], '\n');
     }
 
     // res.send(rows);
-    res.send(JSON.stringify(duration));
+    res.send(JSON.stringify(level));
   });
 });
 
 app.get('/stress', cors(), (req, res) => {
-  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+  connection.query('SELECT level from stress_table_g', function(err, rows) {
     if(err) throw err;
 
     // console.log('The solution is: ', rows);
-    var duration = new Array(rows.length/3);
+    var level = new Array(rows.length/3);
     var cnt = 0;
     //
     for (var i=0; i<rows.length; i+=3) {
@@ -177,16 +178,17 @@ app.get('/stress', cors(), (req, res) => {
       var row2 = rows[i+1];
       var row3 = rows[i+2];
       // duration.push(row.duration);
-      duration[cnt] = row1.duration + row2.duration + row3.duration;
+      level[cnt] = (row1.level + row2.level + row3.level)/3;
       cnt++;
-      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+      console.log('The solution is level[', i, ']: ', level[i], '\n');
     }
 
     // res.send(rows);
-    res.send(JSON.stringify(duration));
+    res.send(JSON.stringify(level));
   });
 });
 
+// 식사량에 대한 table 추가되어야함
 app.get('/calorie', cors(), (req, res) => {
   connection.query('SELECT duration from sleep_table_g', function(err, rows) {
     if(err) throw err;
@@ -210,8 +212,35 @@ app.get('/calorie', cors(), (req, res) => {
   });
 });
 
+// average, max 두 개 어떻게 JSON으로 보낼건지 고민
 app.get('/temperature', cors(), (req, res) => {
-  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
+  connection.query('SELECT average, max from temp_table_g', function(err, rows) {
+    if(err) throw err;
+
+    // console.log('The solution is: ', rows);
+    var average = new Array(rows.length/3);
+    var max = new Array(rows.length/3);
+    var cnt = 0;
+    //
+    for (var i=0; i<rows.length; i+=3) {
+      var row1 = rows[i];
+      var row2 = rows[i+1];
+      var row3 = rows[i+2];
+      // duration.push(row.duration);
+      average[cnt] = (row1.average + row2.average + row3.average)/3;
+      max[cnt] = (row1.max + row2.max + row3.max)/3;
+      cnt++;
+      console.log('The solution is average[', i, ']: ', average[i], ', max[', i, ']: ', max[i], '\n');
+    }
+
+    // res.send(rows);
+    res.send(JSON.stringify(duration));
+  });
+});
+
+// average, max 두 개 어떻게 JSON으로 보낼건지 고민
+app.get('/hrv', cors(), (req, res) => {
+  connection.query('SELECT average, max from heart_table_g', function(err, rows) {
     if(err) throw err;
 
     // console.log('The solution is: ', rows);
@@ -236,29 +265,6 @@ app.get('/temperature', cors(), (req, res) => {
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
-});
-
-app.get('/hrv', cors(), (req, res) => {
-  connection.query('SELECT duration from sleep_table_g', function(err, rows) {
-    if(err) throw err;
-
-    // console.log('The solution is: ', rows);
-    var duration = new Array(rows.length/3);
-    var cnt = 0;
-    //
-    for (var i=0; i<rows.length; i+=3) {
-      var row1 = rows[i];
-      var row2 = rows[i+1];
-      var row3 = rows[i+2];
-      // duration.push(row.duration);
-      duration[cnt] = row1.duration + row2.duration + row3.duration;
-      cnt++;
-      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
-    }
-
-    // res.send(rows);
-    res.send(JSON.stringify(duration));
-  });
 });
 
 // error handler
