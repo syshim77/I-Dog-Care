@@ -95,12 +95,83 @@ app.get('/', cors(), (req, res) => {
   res.send(JSON.stringify(dataList));
 });
 
+app.get('/time', (req, res) => {
+  connection.query('SELECT time from action_table_g', function(err, rows) {
+    if (err) throw err;
+
+    console.log('The solution is: ', rows, '\n');
+
+    res.send(rows);
+  });
+});
+
+app.get('/day', (req, res) => {
+  connection.query('SELECT duration from action_table_g', function(err, rows) {
+    if (err) throw err;
+
+    var durationPerDay = new Array(rows.length/144);
+    var cnt=0;
+
+    for (var i=0; i<rows.length; i+=144) {
+      durationPerDay[cnt] = 0;
+      for (var j=0;j<144; j++) {
+        var row = rows[i+j];
+        durationPerDay[cnt] += row.duration
+      }
+      cnt++;
+    }
+
+    res.send(JSON.stringify(durationPerDay));
+  });
+});
+
+app.get('/activity/five', cors(), (req, res) => {
+  connection.query('SELECT action from action_table_h', function(err, rows) {
+    if (err) throw err;
+
+    console.log('The solution is: ', rows, '\n');
+
+    var action = new Array(rows.length/6);
+    var action48 = new Array(48);
+    var cnt=0;
+
+    // for (var i=0; i<rows.length; i++) {
+    //   console.log('The solution is: ', rows[i], '\n');
+    // }
+
+    for (var i=0; i<rows.length; i+=6) {
+      // var thirty = 0;
+      action[cnt]=0;
+      for (var j=0; j<6; j++) {
+        // thirty += rows[i+j];
+        action[cnt] += rows[i+j].action;
+      }
+      // action[cnt] = thirty;
+      cnt++;
+    }
+
+    for (var k=0; k<48; k++) {
+      action48[k] = 0;
+      for (var s=0; s<3; s++) {
+        action48[k] += rows[s].action;
+      }
+      // action48[k] = rows[k].action;
+      // console.log('The action48 is: ', action48[k], ', ');
+    }
+
+    console.log('The action48 is: ', action48);
+
+    // res.send(JSON.stringify(action));
+    res.send(JSON.stringify(action48));
+  });
+});
+
 // 산책 시간에 대한 table 추가되어야함
 app.get('/activity', cors(), (req, res) => {
   connection.query('SELECT duration from action_table_g', function(err, rows) {
     if(err) throw err;
 
-    // console.log('The solution is: ', rows);
+    console.log('The solution is: ', rows, '\n');
     var duration = new Array(rows.length/3);
     var cnt = 0;
     //
@@ -111,7 +182,7 @@ app.get('/activity', cors(), (req, res) => {
       // duration.push(row.duration);
       duration[cnt] = row1.duration + row2.duration + row3.duration;
       cnt++;
-      console.log('The solution is duration[', i, ']: ', duration[i], '\n');
+      console.log('The solution is duration[', cnt, ']: ', duration[cnt], '\n');
     }
 
     // res.send(rows);
